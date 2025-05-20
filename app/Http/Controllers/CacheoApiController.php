@@ -20,18 +20,22 @@ class CacheoApiController extends Controller
 
             // Guardar en la base de datos si no existe
             $libro = Libro::firstOrCreate(
-                ['google_id' => $id], // Asegúrate de tener este campo en tu migración/modelo
-                [
-                    'title'         => $info['title'] ?? null,
-                    'author'        => isset($info['authors']) ? implode(', ', $info['authors']) : null,
-                    'publisher'     => $info['publisher'] ?? null,
-                    'published_date'=> $info['publishedDate'] ?? null,
-                    'description'   => $info['description'] ?? null,
-                    'page_count'    => $info['pageCount'] ?? null,
-                    'image'         => $info['imageLinks']['thumbnail'] ?? null,
-                    'language'      => $info['language'] ?? null,
-                ]
-            );
+        ['google_id' => $id],
+        [
+            'google_id'      => $id, // <-- ¡Esto es importante!
+            'title'           => $info['title'] ?? null,
+            'author'          => isset($info['authors']) ? implode(', ', $info['authors']) : null,
+            'publisher'       => $info['publisher'] ?? null,
+            'published_date'  => $info['publishedDate'] ?? null,
+            'description'     => $info['description'] ?? null,
+            'page_count'      => $info['pageCount'] ?? null,
+            'imagen_url'      => $info['imageLinks']['thumbnail'] ?? null,
+            'language'        => $info['language'] ?? null,
+            'average_rating'  => $info['averageRating'] ?? null,
+            'categories'      => isset($info['categories']) ? json_encode($info['categories']) : null,
+            'authors'         => isset($info['authors']) ? json_encode($info['authors']) : null,
+        ]
+    );
 
             // Devuelve una vista con los datos del libro guardado
             return view('libro', ['libro' => $libro]);

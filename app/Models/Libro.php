@@ -10,19 +10,19 @@ class Libro extends Model
     use HasFactory;
 
     protected $fillable = [
-        'google_books_id',
-        'title',
-        'author',
-        'publisher',
-        'published_date',
-        'description',
-        'page_count',
-        'imagen_url',
-        'language',
-        'authors',
-        'categories',
-        'average_rating',
-    ];
+    'google_id',
+    'title',
+    'author',
+    'publisher',
+    'published_date',
+    'description',
+    'page_count',
+    'imagen_url',
+    'language',
+    'average_rating',
+    'categories',
+    'authors'
+];
 
     protected $casts = [
         'authors' => 'array',

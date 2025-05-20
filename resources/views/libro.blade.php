@@ -9,8 +9,8 @@
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-xl">
         <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">{{ $libro->title ?? 'Sin título' }}</h1>
         <div class="flex flex-col md:flex-row gap-6 items-center">
-            @if($libro->image)
-                <img src="{{ $libro->image }}" alt="Portada" class="w-40 h-56 object-cover rounded shadow">
+            @if($libro->imagen_url)
+                <img src="{{ $libro->imagen_url }}" alt="Portada" class="w-40 h-56 object-cover rounded shadow">
             @else
                 <div class="w-40 h-56 bg-gray-200 flex items-center justify-center rounded text-gray-500">Sin imagen</div>
             @endif
