@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: Critico_de_bolsillo-app
     ports:
-      - "9000:9000"
+      - "8025:80"
     volumes:
       - ./:/var/www/html
     networks:
@@ -17,7 +17,7 @@ services:
     image: nginx:alpine
     container_name: project-nginx_Critico_de_bolsillo
     ports:
-      - "8080:80"
+      - "9000:80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./:/var/www/html
@@ -60,7 +60,7 @@ services:
     container_name: mailhogCritico_de_bolsillo
     ports:
       - "1025:1025"
-      - "8025:8025"
+      - "8030:8030"
     networks:
       - laravel-network
 

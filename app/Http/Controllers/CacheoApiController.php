@@ -8,45 +8,35 @@ use App\Models\Libro;
 
 class CacheoApiController extends Controller
 {
-    public function buscarLibro($titulo)
-{
-    $apiKey = config('services.google_books.api_key');
-    $url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" . urlencode($titulo) . "&key=" . $apiKey;
+    public function mostrarLibro($id)
+    {
+        $apiKey = config('services.google_books.api_key');
+        $url = "https://www.googleapis.com/books/v1/volumes/{$id}?key={$apiKey}";
 
-    $respuesta = Http::get($url)->json();
+        $respuesta = Http::get($url)->json();
 
-    // Verificar si hay resultados
-    if (!empty($respuesta['items'])) {
-        // Filtrar para encontrar un título exactamente igual
-        foreach ($respuesta['items'] as $item) {
-            $datosLibro = $item['volumeInfo'];
+        if (!empty($respuesta['volumeInfo'])) {
+            $info = $respuesta['volumeInfo'];
 
-            if (strcasecmp($datosLibro['title'], $titulo) == 0) { // Comparación insensible a mayúsculas
-                // Buscar en la BD
-                $libro = Libro::where('title', $titulo)->first();
+            // Guardar en la base de datos si no existe
+            $libro = Libro::firstOrCreate(
+                ['google_id' => $id], // Asegúrate de tener este campo en tu migración/modelo
+                [
+                    'title'         => $info['title'] ?? null,
+                    'author'        => isset($info['authors']) ? implode(', ', $info['authors']) : null,
+                    'publisher'     => $info['publisher'] ?? null,
+                    'published_date'=> $info['publishedDate'] ?? null,
+                    'description'   => $info['description'] ?? null,
+                    'page_count'    => $info['pageCount'] ?? null,
+                    'image'         => $info['imageLinks']['thumbnail'] ?? null,
+                    'language'      => $info['language'] ?? null,
+                ]
+            );
 
-                // Si no está en la BD, guardarlo
-                if (!$libro) {
-                    $libro = Libro::create([
-                        'title' => $datosLibro['title'],
-                        'author' => $datosLibro['authors'][0] ?? null,
-                        'publisher' => $datosLibro['publisher'] ?? null,
-                        'published_date' => $datosLibro['publishedDate'] ?? null,
-                        'description' => $datosLibro['description'] ?? null,
-                        'page_count' => $datosLibro['pageCount'] ?? null,
-                        'image' => $datosLibro['imageLinks']['thumbnail'] ?? null,
-                        'language' => $datosLibro['language'] ?? null,
-                    ]);
-                }
-
-                return response()->json($libro);
-            }
+            // Devuelve una vista con los datos del libro guardado
+            return view('libro', ['libro' => $libro]);
         }
+
+        return redirect('/resultado')->with('error', 'Libro no encontrado');
     }
-
-    // Si no hay coincidencias exactas, devolver un mensaje
-    return response()->json(['message' => 'Libro no encontrado en la API ni en la base de datos'], 404);
 }
-
-}
-

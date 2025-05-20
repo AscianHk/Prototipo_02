@@ -10,6 +10,7 @@ class CreateLibrosTable extends Migration
     Schema::create('libros', function (Blueprint $table) {
         $table->id();
         $table->string('google_books_id')->unique()->nullable();
+        $table->string('google_id')->unique()->nullable();
         $table->string('title')->index();
         $table->string('author')->nullable()->index();
         $table->string('publisher')->nullable();
