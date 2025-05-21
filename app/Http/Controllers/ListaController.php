@@ -13,7 +13,15 @@ class ListaController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        $favoritos = $user->listas()->with('libro')->where('favorito', true)->get();
+        $pendiente = $user->listas()->with('libro')->where('tipo_lista', 'pendiente')->get();
+        $leyendo   = $user->listas()->with('libro')->where('tipo_lista', 'leyendo')->get();
+        $terminado = $user->listas()->with('libro')->where('tipo_lista', 'terminado')->get();
+        $me_gusta  = $user->listas()->with('libro')->where('tipo_lista', 'me_gusta')->get();
+
+        return view('UserPanel.Listas', compact('favoritos', 'pendiente', 'leyendo', 'terminado', 'me_gusta'));
     }
 
     /**
