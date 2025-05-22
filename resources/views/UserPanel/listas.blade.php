@@ -1,4 +1,4 @@
-{{-- filepath: resources/views/UserPanel/Listas.blade.php --}}
+{{-- filepath: resources/views/UserPanel/listas.blade.php --}}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,7 +9,7 @@
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center py-10">
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-2xl">
         <h1 class="text-2xl font-bold text-blue-900 mb-8 text-center">Mis Listas</h1>
-
+                
         {{-- Favoritos --}}
         <details class="mb-6">
             <summary class="cursor-pointer font-semibold text-blue-800 text-lg bg-blue-100 px-4 py-2 rounded hover:bg-blue-200 transition">
@@ -19,7 +19,21 @@
                 @if(isset($favoritos) && count($favoritos))
                     <ul class="list-disc ml-4">
                         @foreach($favoritos as $item)
-                            <li class="mb-1">{{ $item->libro->title ?? 'Sin título' }}</li>
+                            <li class="mb-3 flex items-center gap-3">
+                                <a href="{{ url('/libro/' . $item->libro->google_id) }}" class="flex items-center gap-2 group">
+                                    <img src="{{ $item->libro->imagen_url ?? 'https://via.placeholder.com/40x60?text=Sin+imagen' }}"
+                                        alt="Portada"
+                                        class="w-10 h-14 object-cover rounded shadow group-hover:scale-105 transition" />
+                                    <span class="text-blue-900 group-hover:underline">{{ $item->libro->title ?? 'Sin título' }}</span>
+                                </a>
+                                <form action="{{ route('listas.eliminar', $item->id) }}" method="POST" class="ml-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 font-bold" title="Eliminar">
+                                        ✕
+                                    </button>
+                                </form>
+                            </li>
                         @endforeach
                     </ul>
                 @else
@@ -37,7 +51,21 @@
                 @if(isset($pendiente) && count($pendiente))
                     <ul class="list-disc ml-4">
                         @foreach($pendiente as $item)
-                            <li class="mb-1">{{ $item->libro->title ?? 'Sin título' }}</li>
+                            <li class="mb-3 flex items-center gap-3">
+                                <a href="{{ url('/libro/' . $item->libro->google_id) }}" class="flex items-center gap-2 group">
+                                    <img src="{{ $item->libro->imagen_url ?? 'https://via.placeholder.com/40x60?text=Sin+imagen' }}"
+                                        alt="Portada"
+                                        class="w-10 h-14 object-cover rounded shadow group-hover:scale-105 transition" />
+                                    <span class="text-blue-900 group-hover:underline">{{ $item->libro->title ?? 'Sin título' }}</span>
+                                </a>
+                                <form action="{{ route('listas.eliminar', $item->id) }}" method="POST" class="ml-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 font-bold" title="Eliminar">
+                                        ✕
+                                    </button>
+                                </form>
+                            </li>
                         @endforeach
                     </ul>
                 @else
@@ -55,7 +83,21 @@
                 @if(isset($leyendo) && count($leyendo))
                     <ul class="list-disc ml-4">
                         @foreach($leyendo as $item)
-                            <li class="mb-1">{{ $item->libro->title ?? 'Sin título' }}</li>
+                            <li class="mb-3 flex items-center gap-3">
+                                <a href="{{ url('/libro/' . $item->libro->google_id) }}" class="flex items-center gap-2 group">
+                                    <img src="{{ $item->libro->imagen_url ?? 'https://via.placeholder.com/40x60?text=Sin+imagen' }}"
+                                        alt="Portada"
+                                        class="w-10 h-14 object-cover rounded shadow group-hover:scale-105 transition" />
+                                    <span class="text-blue-900 group-hover:underline">{{ $item->libro->title ?? 'Sin título' }}</span>
+                                </a>
+                                <form action="{{ route('listas.eliminar', $item->id) }}" method="POST" class="ml-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 font-bold" title="Eliminar">
+                                        ✕
+                                    </button>
+                                </form>
+                            </li>
                         @endforeach
                     </ul>
                 @else
@@ -73,7 +115,21 @@
                 @if(isset($terminado) && count($terminado))
                     <ul class="list-disc ml-4">
                         @foreach($terminado as $item)
-                            <li class="mb-1">{{ $item->libro->title ?? 'Sin título' }}</li>
+                            <li class="mb-3 flex items-center gap-3">
+                                <a href="{{ url('/libro/' . $item->libro->google_id) }}" class="flex items-center gap-2 group">
+                                    <img src="{{ $item->libro->imagen_url ?? 'https://via.placeholder.com/40x60?text=Sin+imagen' }}"
+                                        alt="Portada"
+                                        class="w-10 h-14 object-cover rounded shadow group-hover:scale-105 transition" />
+                                    <span class="text-blue-900 group-hover:underline">{{ $item->libro->title ?? 'Sin título' }}</span>
+                                </a>
+                                <form action="{{ route('listas.eliminar', $item->id) }}" method="POST" class="ml-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 font-bold" title="Eliminar">
+                                        ✕
+                                    </button>
+                                </form>
+                            </li>
                         @endforeach
                     </ul>
                 @else
@@ -91,7 +147,21 @@
                 @if(isset($me_gusta) && count($me_gusta))
                     <ul class="list-disc ml-4">
                         @foreach($me_gusta as $item)
-                            <li class="mb-1">{{ $item->libro->title ?? 'Sin título' }}</li>
+                            <li class="mb-3 flex items-center gap-3">
+                                <a href="{{ url('/libro/' . $item->libro->google_id) }}" class="flex items-center gap-2 group">
+                                    <img src="{{ $item->libro->imagen_url ?? 'https://via.placeholder.com/40x60?text=Sin+imagen' }}"
+                                        alt="Portada"
+                                        class="w-10 h-14 object-cover rounded shadow group-hover:scale-105 transition" />
+                                    <span class="text-blue-900 group-hover:underline">{{ $item->libro->title ?? 'Sin título' }}</span>
+                                </a>
+                                <form action="{{ route('listas.eliminar', $item->id) }}" method="POST" class="ml-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 font-bold" title="Eliminar">
+                                        ✕
+                                    </button>
+                                </form>
+                            </li>
                         @endforeach
                     </ul>
                 @else

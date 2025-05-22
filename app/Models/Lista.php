@@ -9,8 +9,9 @@ class Lista extends Model
     use HasFactory;
 
     protected $fillable = [
-        'usuario_id',
+        'user_id',
         'libro_id',
+        'favorito',
         'tipo_lista',
     ];
 

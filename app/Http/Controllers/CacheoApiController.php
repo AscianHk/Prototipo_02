@@ -41,6 +41,7 @@ class CacheoApiController extends Controller
             return view('libro', ['libro' => $libro]);
         }
 
+        
         return redirect('/resultado')->with('error', 'Libro no encontrado');
     }
 }

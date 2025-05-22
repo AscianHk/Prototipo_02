@@ -76,6 +76,24 @@
                         Ver reseñas
                     </button>
                 </form>
+                {{-- Barra selectora para añadir a lista --}}
+                <form action="{{ route('listas.agregar') }}" method="POST" class="mt-4 flex flex-col items-center gap-2">
+                    @csrf
+                    <input type="hidden" name="libro_id" value="{{ $libro->id }}">
+                    <label for="tipo_lista" class="font-semibold text-blue-800">Añadir a:</label>
+                    <div class="flex gap-2">
+                        <select name="tipo_lista" id="tipo_lista" class="border border-blue-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="favorito">Favoritos</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="leyendo">Leyendo</option>
+                            <option value="terminado">Terminado</option>
+                            <option value="me_gusta">Me gusta</option>
+                        </select>
+                        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+                            Añadir
+                        </button>
+                    </div>
+                </form>
             @endauth
         </div>
     </div>

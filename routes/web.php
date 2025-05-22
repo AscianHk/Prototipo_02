@@ -25,7 +25,6 @@ use App\Models\User;
     Route::get('/libro/{id}', [CacheoApiController::class, 'mostrarLibro']);
 
 
-
     Route::get('/libro/{id}/resenas', [LibroController::class, 'mostrarResenas'])->middleware(AuthControl::class);
     Route::post('/libro/{id}/resenas', [LibroController::class, 'guardarResena'])->middleware(AuthControl::class);
     Route::get('/libro/{id}/resenas/editar/{resenaId}', [LibroController::class, 'editarResena'])->middleware(AuthControl::class);
@@ -41,13 +40,13 @@ use App\Models\User;
 
 
 
-Route::get('/usuario/listas', [ListaController::class, 'index'])
-    ->middleware('auth')
-    ->name('usuario.listas');
+    Route::get('/usuario/listas', [ListaController::class, 'index'])
+        ->middleware('auth')
+        ->name('usuario.listas');
 
+    Route::post('/listas/agregar', [ListaController::class, 'agregar'])->name('listas.agregar')->middleware('auth');
 
-
-
+    Route::delete('/listas/{id}/eliminar', [ListaController::class, 'eliminar'])->name('listas.eliminar')->middleware('auth');
 
 
 
@@ -77,10 +76,6 @@ Route::get('/usuario/listas', [ListaController::class, 'index'])
         ->middleware('auth')
         ->name('usuario.biografia');
 
-
-    Route::get('/usuario/listas', [UserPanelController::class, 'listas'])
-        ->middleware('auth')
-        ->name('usuario.listas');
 
 //=========================================================================
 //                                Autenticaciónes
