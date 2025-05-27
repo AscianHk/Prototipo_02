@@ -34,6 +34,20 @@ use App\Models\User;
 
 
 
+
+    
+    Route::get('/perfil/{id}', [UserPanelController::class, 'verPerfil'])
+        ->middleware('auth')
+        ->name('perfil.usuario');
+
+    Route::post('/usuario/{id}/seguir', [UserPanelController::class, 'seguirUsuario'])
+        ->middleware('auth')
+        ->name('usuario.seguir');
+
+    Route::delete('/usuario/{id}/dejar-seguir', [UserPanelController::class, 'dejarDeSeguir'])
+        ->middleware('auth')
+        ->name('usuario.dejar-seguir');
+
 //=========================================================================
 //                                Listas
 //=========================================================================
@@ -49,8 +63,16 @@ use App\Models\User;
     Route::delete('/listas/{id}/eliminar', [ListaController::class, 'eliminar'])->name('listas.eliminar')->middleware('auth');
 
 
-
-
+    Route::get('/buscar-usuario', [UserPanelController::class, 'buscarUsuario'])
+        ->middleware('auth')
+        ->name('buscar.usuario');
+//=========================================================================
+//                             Administración
+//=========================================================================
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::post('/admin/actualizar-usuario/{id}', [AdminController::class, 'actualizarUsuario'])->name('admin.actualizarUsuario');
+    Route::post('/admin/crear-usuario', [AdminController::class, 'crearUsuario'])->name('admin.crearUsuario');
+    Route::get('/admin/editar-usuario/{id}', [AdminController::class, 'editarUsuario'])->name('admin.editarUsuario');
 
 
 
@@ -76,6 +98,8 @@ use App\Models\User;
         ->middleware('auth')
         ->name('usuario.biografia');
 
+
+    
 
 //=========================================================================
 //                                Autenticaciónes

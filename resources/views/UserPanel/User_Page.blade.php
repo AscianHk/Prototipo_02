@@ -1,4 +1,4 @@
-{{-- resources/views/usuario/panel.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,6 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center py-10">
+
+
+    <form action="{{ route('buscar.usuario') }}" method="GET" class="mb-8 flex gap-2 justify-center w-full max-w-2xl">
+        <input type="text" name="q" placeholder="Buscar usuario..." class="flex-1 border border-blue-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition">Buscar usuario</button>
+    </form>
+
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-2xl">
         <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
             <div>
@@ -49,8 +56,8 @@
                 <p class="text-gray-600">No has escrito ninguna reseña todavía.</p>
             @endforelse
             <a href="{{ route('usuario.listas') }}" class="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 transition">
-    Ir a mis listas
-</a>
+                Ir a mis listas
+            </a>
         </div>
     </div>
 </body>

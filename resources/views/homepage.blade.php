@@ -48,6 +48,7 @@
                 <option value="titulo">Título</option>
                 <option value="autor">Autor</option>
                 <option value="genero">Género</option>
+                <option value="usuario">Usuario</option>
             </select>
         </form>
         <p class="mt-8 text-center text-blue-800/80">¡Encuentra tu próximo libro favorito!</p>

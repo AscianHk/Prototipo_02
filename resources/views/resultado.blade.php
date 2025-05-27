@@ -50,6 +50,25 @@
         @else
             <div class="text-center text-red-700 font-semibold">No se encontraron resultados.</div>
         @endif
+        @php
+            $usuarios = session('usuarios');
+        @endphp
+
+        @if(isset($usuarios) && count($usuarios) > 0)
+            <div class="mb-8">
+                <h2 class="text-xl font-bold text-blue-800 mb-4">Usuarios encontrados</h2>
+                <ul>
+                    @foreach($usuarios as $usuario)
+                        <li class="mb-2 flex items-center gap-3">
+                            <img src="{{ $usuario->foto_perfil ?? 'https://ui-avatars.com/api/?name='.urlencode($usuario->nombre_usuario) }}" alt="Foto" class="w-10 h-10 rounded-full object-cover">
+                            <a href="{{ route('perfil.usuario', $usuario->id) }}" class="text-blue-700 hover:underline font-semibold">
+                                {{ $usuario->nombre_usuario }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="mt-8 text-center">
             <a href="/" class="text-blue-700 hover:underline">Volver a buscar</a>
         </div>

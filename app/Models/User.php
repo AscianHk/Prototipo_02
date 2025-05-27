@@ -32,7 +32,8 @@ class User extends Authenticatable
 
     public function resenas()
     {
-        return $this->hasMany(Resena::class);
+        return $this->hasMany(\App\Models\Resena::class, 'usuario_id');
+
     }
 
     public function listas()
