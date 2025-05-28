@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Resena;
 use App\Models\User;
+use App\Models\Diario;
 
 class UserPanelController extends Controller
 {
@@ -85,5 +86,37 @@ class UserPanelController extends Controller
         return back()->with('success', 'Has dejado de seguir a este usuario.');
     }
 
+
+
+    public function mostrarDiario($usuario_id, $libro_id)
+    {
+        $entradas = \App\Models\Diario::where('usuario_id', $usuario_id)
+            ->where('libro_id', $libro_id)
+            ->orderBy('capitulo')
+            ->get();
+
+        return view('UserPanel.Diario', [
+            'entradas' => $entradas,
+            'usuario_id' => $usuario_id,
+            'libro_id' => $libro_id,
+        ]);
+    }
+    public function guardarEntradaDiario(Request $request, $usuario_id, $libro_id)
+    {
+        $request->validate([
+            'texto' => 'required|string|max:5000',
+        ]);
+
+        \App\Models\Diario::create([
+            'usuario_id' => $usuario_id,
+            'libro_id' => $libro_id,
+            'texto' => $request->texto,
+        ]);
+
+        return redirect()->route('usuario.diario', [
+            'usuario_id' => $usuario_id,
+            'libro_id' => $libro_id
+        ])->with('success', 'Entrada guardada correctamente.');
+    }
 
 }

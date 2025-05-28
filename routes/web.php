@@ -6,6 +6,7 @@ use App\Http\Controllers\CacheoApiController;
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\UserPanelController;
 use App\Http\Controllers\ListaController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -66,6 +67,14 @@ use App\Models\User;
     Route::get('/buscar-usuario', [UserPanelController::class, 'buscarUsuario'])
         ->middleware('auth')
         ->name('buscar.usuario');
+
+
+    Route::get('/usuario/{usuario_id}/libro/{libro_id}/diario', [UserPanelController::class, 'mostrarDiario'])
+    ->middleware('auth')
+    ->name('usuario.diario');
+    Route::post('/usuario/{usuario_id}/libro/{libro_id}/diario', [UserPanelController::class, 'guardarEntradaDiario'])
+    ->name('usuario.diario.guardar');
+
 //=========================================================================
 //                             Administración
 //=========================================================================
@@ -134,12 +143,14 @@ use App\Models\User;
 
 
     Route::post('register', function(Request $request) {
+
+        
         $request->validate([
             'nombre_usuario' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:4|confirmed',
+            'password' => 'required|min:1|confirmed',
         ]);
-
+        
         $user = User::create([
             'nombre_usuario' => $request->nombre_usuario,
             'email' => $request->email,
@@ -154,11 +165,10 @@ use App\Models\User;
 
 
 
-    Route::get('logout', function() {
+    Route::post('logout', function() {
         Auth::logout();
         return redirect('/')->with('success', 'Sesión cerrada correctamente');
     })->name('logout');
-
 
 //=========================================================================
 //=========================================================================

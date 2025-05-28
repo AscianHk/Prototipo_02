@@ -15,19 +15,19 @@ class User extends Authenticatable
     protected $fillable = [
         'nombre_usuario',
         'email',
-        'contrasena',
+        'password',
         'biografia',
-        'avatar_url',
+        'foto_perfil',
     ];
 
     protected $hidden = [
-        'contrasena',
+        'password',
         'remember_token',
     ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'contrasena' => 'hashed',
+        'password' => 'hashed',
     ];
 
     public function resenas()
@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Amigo::class, 'usuario_id');
     }
+    public function diarios()
+    {
+        return $this->hasMany(\App\Models\Diario::class, 'usuario_id');
+    }
+
 }

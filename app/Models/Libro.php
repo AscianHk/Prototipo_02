@@ -46,4 +46,11 @@ class Libro extends Model
     {
         return $value ?? 'default-image.jpg';
     }
+    
+    public function diarios()
+    {
+        return $this->hasMany(\App\Models\Diario::class, 'libro_id');
+    }
+
+
 }

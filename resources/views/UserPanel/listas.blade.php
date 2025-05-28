@@ -33,6 +33,11 @@
                                         ✕
                                     </button>
                                 </form>
+                                <a href="{{ route('usuario.diario', ['usuario_id' => Auth::id(), 'libro_id' => $item->libro->id]) }}"
+                                   class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition ml-2"
+                                   title="Diario de aventuras">
+                                    Diario de aventuras
+                                </a>
                             </li>
                         @endforeach
                     </ul>
@@ -65,6 +70,11 @@
                                         ✕
                                     </button>
                                 </form>
+                                <a href="{{ route('usuario.diario', ['usuario_id' => Auth::id(), 'libro_id' => $item->libro->id]) }}"
+                                   class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition ml-2"
+                                   title="Diario de aventuras">
+                                    Diario de aventuras
+                                </a>
                             </li>
                         @endforeach
                     </ul>
@@ -97,6 +107,11 @@
                                         ✕
                                     </button>
                                 </form>
+                                <a href="{{ route('usuario.diario', ['usuario_id' => Auth::id(), 'libro_id' => $item->libro->id]) }}"
+                                   class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition ml-2"
+                                   title="Diario de aventuras">
+                                    Diario de aventuras
+                                </a>
                             </li>
                         @endforeach
                     </ul>
@@ -129,6 +144,11 @@
                                         ✕
                                     </button>
                                 </form>
+                                <a href="{{ route('usuario.diario', ['usuario_id' => Auth::id(), 'libro_id' => $item->libro->id]) }}"
+                                   class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition ml-2"
+                                   title="Diario de aventuras">
+                                    Diario de aventuras
+                                </a>
                             </li>
                         @endforeach
                     </ul>
@@ -161,6 +181,11 @@
                                         ✕
                                     </button>
                                 </form>
+                                <a href="{{ route('usuario.diario', ['usuario_id' => Auth::id(), 'libro_id' => $item->libro->id]) }}"
+                                   class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition ml-2"
+                                   title="Diario de aventuras">
+                                    Diario de aventuras
+                                </a>
                             </li>
                         @endforeach
                     </ul>

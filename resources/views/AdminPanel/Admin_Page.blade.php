@@ -47,7 +47,7 @@
                             <td class="py-2">{{ $usuario->rol }}</td>
                             <td class="py-2 flex gap-2">
                                 <a href="{{ route('admin.editarUsuario', $usuario->id) }}" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition">Editar</a>
-                                {{-- Puedes agregar aquí un botón para eliminar si lo deseas --}}
+                                
                             </td>
                         </tr>
                     @endforeach
