@@ -11,9 +11,9 @@
         <h1 class="text-2xl font-bold text-blue-900 mb-6 text-center">Resultado de la búsqueda</h1>
 
         {{-- Resultados de libros --}}
-        @if(isset($resultado['items']) && count($resultado['items']) > 0)
+        @if(isset($libros) && $libros->count() > 0)
             <div class="grid gap-6">
-                @foreach($resultado['items'] as $item)
+                @foreach($libros as $item)
                     @php
                         $info = $item['volumeInfo'];
                         $id_item = $item['id'] ?? '';
@@ -45,6 +45,9 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+            <div class="mt-6">
+                {{ $libros->links() }}
             </div>
         @else
             <div class="text-center text-red-700 font-semibold">No se encontraron resultados.</div>
