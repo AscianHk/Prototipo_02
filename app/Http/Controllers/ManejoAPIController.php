@@ -35,6 +35,6 @@ class ManejoAPIController extends Controller
 
     $respuesta = Http::get($url);
 
-    return view('resultado', ['resultado' => $respuesta->json()]);
+    return redirect('/resultado')->with('resultado', $respuesta->json());
     }
 }
