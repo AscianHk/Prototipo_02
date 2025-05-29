@@ -1,3 +1,4 @@
+{{-- filepath: resources/views/resultado.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +9,8 @@
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center justify-center">
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-2xl">
         <h1 class="text-2xl font-bold text-blue-900 mb-6 text-center">Resultado de la búsqueda</h1>
-        @php
-            $resultado = session('resultado');
-        @endphp
 
+        {{-- Resultados de libros --}}
         @if(isset($resultado['items']) && count($resultado['items']) > 0)
             <div class="grid gap-6">
                 @foreach($resultado['items'] as $item)
@@ -50,12 +49,10 @@
         @else
             <div class="text-center text-red-700 font-semibold">No se encontraron resultados.</div>
         @endif
-        @php
-            $usuarios = session('usuarios');
-        @endphp
 
+        {{-- Resultados de usuarios --}}
         @if(isset($usuarios) && count($usuarios) > 0)
-            <div class="mb-8">
+            <div class="mb-8 mt-8">
                 <h2 class="text-xl font-bold text-blue-800 mb-4">Usuarios encontrados</h2>
                 <ul>
                     @foreach($usuarios as $usuario)
@@ -69,6 +66,7 @@
                 </ul>
             </div>
         @endif
+
         <div class="mt-8 text-center">
             <a href="/" class="text-blue-700 hover:underline">Volver a buscar</a>
         </div>
