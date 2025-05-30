@@ -1,23 +1,22 @@
 <?php
-// filepath: app/Models/User.php
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasFactory; //, HasApiTokens;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
-        'nombre_usuario',
+        'username',
         'email',
         'password',
-        'biografia',
-        'foto_perfil',
+        'profile_picture',
+        'bio',
+        'role',
     ];
 
     protected $hidden = [
@@ -30,24 +29,45 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function resenas()
+    // Relationships
+    public function reviews()
     {
-        return $this->hasMany(\App\Models\Resena::class, 'usuario_id');
-
+        return $this->hasMany(Review::class);
     }
 
-    public function listas()
+    public function bookLists()
     {
-        return $this->hasMany(Lista::class);
+        return $this->hasMany(UserBookList::class);
     }
 
-    public function amigos()
+    public function diaryEntries()
     {
-        return $this->hasMany(Amigo::class, 'usuario_id');
-    }
-    public function diarios()
-    {
-        return $this->hasMany(\App\Models\Diario::class, 'usuario_id');
+        return $this->hasMany(DiaryEntry::class);
     }
 
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'followed_id', 'follower_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'follower_id', 'followed_id');
+    }
+
+    // Helper methods
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isFollowing($userId)
+    {
+        return $this->following()->where('followed_id', $userId)->exists();
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        return $this->profile_picture ?: "https://ui-avatars.com/api/?name=" . urlencode($this->username);
+    }
 }

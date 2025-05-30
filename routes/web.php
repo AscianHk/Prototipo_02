@@ -1,175 +1,52 @@
 <?php
 
-use App\Http\Middleware\AuthControl;
-use App\Http\Controllers\ManejoAPIController;
-use App\Http\Controllers\CacheoApiController;
-use App\Http\Controllers\LibroController;
-use App\Http\Controllers\UserPanelController;
-use App\Http\Controllers\ListaController;
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use App\Models\User;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DiaryController;
+use App\Http\Controllers\SearchController;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
 
-    Route::get('/', function () {
-        return view('homepage');
-    });
+// Home page
+Route::get('/', [BookController::class, 'index'])->name('home');
 
+// Search
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-    Route::match(['get', 'post'], '/buscar-libro/{q?}', [ManejoAPIController::class, 'buscarLibro']);
+// Books
+Route::get('/book/{id}', [BookController::class, 'show'])->name('book.show');
+Route::get('/book/{id}/reviews', [ReviewController::class, 'index'])->name('book.reviews');
 
-    Route::get('/resultado', function () {
-        return view('resultado');
-    })->name('resultado');
-
-    Route::get('/libro/{id}', [CacheoApiController::class, 'mostrarLibro']);
-
-
-    Route::get('/libro/{id}/resenas', [LibroController::class, 'mostrarResenas'])->middleware(AuthControl::class);
-    Route::post('/libro/{id}/resenas', [LibroController::class, 'guardarResena'])->middleware(AuthControl::class);
-    Route::get('/libro/{id}/resenas/editar/{resenaId}', [LibroController::class, 'editarResena'])->middleware(AuthControl::class);
-    Route::post('/libro/{id}/resenas/editar/{resenaId}', [LibroController::class, 'actualizarResena'])->middleware(AuthControl::class);
-    Route::get('/libro/{id}/resenas/borrar/{resenaId}', [LibroController::class, 'borrarResena'])->middleware(AuthControl::class);
-
-
-
-
-
+// Protected routes (require authentication)
+Route::middleware('auth')->group(function () {
+    // User profile
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
     
-    Route::get('/perfil/{id}', [UserPanelController::class, 'verPerfil'])
-        ->middleware('auth')
-        ->name('perfil.usuario');
-
-    Route::post('/usuario/{id}/seguir', [UserPanelController::class, 'seguirUsuario'])
-        ->middleware('auth')
-        ->name('usuario.seguir');
-
-    Route::delete('/usuario/{id}/dejar-seguir', [UserPanelController::class, 'dejarDeSeguir'])
-        ->middleware('auth')
-        ->name('usuario.dejar-seguir');
-
-//=========================================================================
-//                                Listas
-//=========================================================================
-
-
-
-    Route::get('/usuario/listas', [ListaController::class, 'index'])
-        ->middleware('auth')
-        ->name('usuario.listas');
-
-    Route::post('/listas/agregar', [ListaController::class, 'agregar'])->name('listas.agregar')->middleware('auth');
-
-    Route::delete('/listas/{id}/eliminar', [ListaController::class, 'eliminar'])->name('listas.eliminar')->middleware('auth');
-
-
-    Route::get('/buscar-usuario', [UserPanelController::class, 'buscarUsuario'])
-        ->middleware('auth')
-        ->name('buscar.usuario');
-
-
-    Route::get('/usuario/{usuario_id}/libro/{libro_id}/diario', [UserPanelController::class, 'mostrarDiario'])
-    ->middleware('auth')
-    ->name('usuario.diario');
-    Route::post('/usuario/{usuario_id}/libro/{libro_id}/diario', [UserPanelController::class, 'guardarEntradaDiario'])
-    ->name('usuario.diario.guardar');
-
-//=========================================================================
-//                             Administración
-//=========================================================================
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::post('/admin/actualizar-usuario/{id}', [AdminController::class, 'actualizarUsuario'])->name('admin.actualizarUsuario');
-    Route::post('/admin/crear-usuario', [AdminController::class, 'crearUsuario'])->name('admin.crearUsuario');
-    Route::get('/admin/editar-usuario/{id}', [AdminController::class, 'editarUsuario'])->name('admin.editarUsuario');
-
-
-
-
-//=========================================================================
-//                                Paneles
-//=========================================================================
-
-
-
-    Route::get('/usuario/panel', [UserPanelController::class, 'panel'])
-        ->middleware('auth')
-        ->name('usuario.panel');
-
-
-
-    Route::post('/usuario/foto', [UserPanelController::class, 'actualizarFoto'])
-        ->middleware('auth')
-        ->name('usuario.foto');
-
-  
-    Route::post('/usuario/biografia', [UserPanelController::class, 'actualizarBiografia'])
-        ->middleware('auth')
-        ->name('usuario.biografia');
-
-
+    // Book list management
+    Route::post('/book/{id}/add-to-list', [BookController::class, 'addToList'])->name('book.addToList');
+    Route::delete('/book/{id}/remove-from-list', [BookController::class, 'removeFromList'])->name('book.removeFromList');
     
+    // Reviews
+    Route::post('/book/{id}/reviews', [ReviewController::class, 'store'])->name('review.store');
+    Route::put('/review/{id}', [ReviewController::class, 'update'])->name('review.update');
+    Route::delete('/review/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
+    
+    // Reading diary
+    Route::get('/diary/{user_id}/{book_id}', [DiaryController::class, 'show'])->name('diary.show');
+    Route::post('/diary/{user_id}/{book_id}', [DiaryController::class, 'store'])->name('diary.store');
+    
+    // Follow users
+    Route::post('/user/{id}/follow', [UserController::class, 'follow'])->name('user.follow');
+    Route::delete('/user/{id}/unfollow', [UserController::class, 'unfollow'])->name('user.unfollow');
+});
 
-//=========================================================================
-//                                Autenticaciónes
-//=========================================================================
+// Public user profiles
+Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 
-
-
-
-    Route::get('login', function () {
-        return view('Auth.login');
-    })->name('login');
-
-    Route::post('login', function(Request $request) {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            return redirect('/')->with('success', 'Sesión iniciada correctamente');
-        } else {
-            return back()->withErrors(['email' => 'Credenciales incorrectas'])->withInput();
-        }
-    })->name('login.post');
-
-    Route::get('register', function () {
-        return view('Auth.register');
-    })->name('register');
-
-
-    Route::post('register', function(Request $request) {
-
-        
-        $request->validate([
-            'nombre_usuario' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:1|confirmed',
-        ]);
-        
-        $user = User::create([
-            'nombre_usuario' => $request->nombre_usuario,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'rol' => 'usuario',
-        ]);
-
-        Auth::login($user);
-        return redirect('/')->with('success', 'Usuario registrado correctamente');
-    })->name('register.post');
-
-
-
-
-    Route::post('logout', function() {
-        Auth::logout();
-        return redirect('/')->with('success', 'Sesión cerrada correctamente');
-    })->name('logout');
-
-//=========================================================================
-//=========================================================================
-//=========================================================================
+require __DIR__.'/auth.php';
