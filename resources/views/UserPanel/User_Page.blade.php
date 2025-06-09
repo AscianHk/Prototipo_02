@@ -39,7 +39,10 @@
             @forelse($resenas as $resena)
                 <div class="mb-4 border-b border-blue-200 pb-2">
                     <div class="flex items-center mb-1">
-                        <span class="font-semibold text-blue-800 mr-2">{{ $resena->libro->title ?? 'Libro desconocido' }}</span>
+                        <!-- Enlace al libro -->
+                        <a href="{{ url('/libro/' . $resena->libro->google_id) }}" class="font-semibold text-blue-800 hover:underline mr-2">
+                            {{ $resena->libro->title ?? 'Libro desconocido' }}
+                        </a>
                         <span class="text-yellow-500">
                             @for($i = 0; $i < $resena->puntuacion; $i++)
                                 ★
@@ -55,6 +58,7 @@
             @empty
                 <p class="text-gray-600">No has escrito ninguna reseña todavía.</p>
             @endforelse
+
         </div>
     </div>
 </body>
