@@ -7,8 +7,7 @@
     <title>Inicio | Crítico de Bolsillo</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-br from-blue-900 via-purple-700 to-blue-400 min-h-screen flex flex-col items-center">
-
+<body class="min-h-screen flex flex-col items-center py-16 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('fondo.jpg') }}');">
     <!-- Barra de navegación -->
     @include('parts.navbar')
 
@@ -20,17 +19,11 @@
         </div>
     </div>
 
-    <!-- Pie de página -->
-    <footer class="w-full bg-purple-800 text-white py-6 mt-16 border-t border-purple-700">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-            <p class="text-sm">&copy; 2025 Crítico de Bolsillo. Todos los derechos reservados.</p>
-            <div class="flex gap-6 mt-4 md:mt-0">
-                <a href="https://github.com/AscianHk" class="hover:underline">Contacto</a>
-                <a href="" class="hover:underline">Términos y condiciones</a>
-                <a href="" class="hover:underline">Política de privacidad</a>
-            </div>
-        </div>
-    </footer>
+
+    @include('parts.footer')
+
+
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

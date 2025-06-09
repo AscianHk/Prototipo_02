@@ -1,4 +1,4 @@
-<nav class="sticky top-0 left-0 w-full bg-blue-800/80 backdrop-blur-md shadow-lg py-4 px-8 flex items-center justify-between md:flex-col md:gap-4 z-50">
+<nav class="fixed top-0 left-0 w-full bg-blue-800/80 backdrop-blur-md shadow-lg py-4 px-8 flex items-center justify-between md:flex-col md:gap-4 z-50">
     <!-- Contenedor de navegación -->
     <div class="flex items-center justify-between w-full max-w-7xl mx-auto">
         
@@ -48,5 +48,5 @@
     </div>
 </nav>
 
-<!-- Espaciado para evitar que el contenido quede oculto detrás de la barra -->
-<div class="mt-24"></div>
+<!-- Espaciado automático para evitar que el contenido quede oculto detrás del navbar -->
+<div class="pt-[80px]"></div>

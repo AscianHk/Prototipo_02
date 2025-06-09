@@ -24,7 +24,7 @@
 </script>
 
 
-<body class="bg-gradient-to-br from-blue-900 via-purple-700 to-blue-400 min-h-screen flex flex-col items-center justify-center">
+<body class="min-h-screen flex flex-col items-center py-16 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('Escribir.jpg') }}');">
     @include('parts.navbar')
 
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-2xl mx-auto mt-10">

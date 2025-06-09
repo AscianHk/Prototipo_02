@@ -33,7 +33,7 @@
 </script>
 
 
-<body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center justify-center">
+<body class="min-h-screen flex flex-col items-center py-16 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('Libro_Libro.jpg') }}');">
 
     @include('parts.navbar')
 
@@ -141,5 +141,6 @@
             @endauth
         </div>
     </div>
+    @include('parts.footer')
 </body>
 </html>

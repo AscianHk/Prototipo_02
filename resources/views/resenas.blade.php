@@ -25,7 +25,8 @@
 
 
 
-<body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center py-10">
+<body class="min-h-screen flex flex-col items-center py-16 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('Biblios.jpg') }}');">
+    {{-- Barra de navegación --}}
     @include('parts.navbar')
 
     {{-- Contenedor principal --}}
@@ -89,6 +90,7 @@
             <a href="{{ url('/libro/'.$libro->id) }}" class="text-blue-700 hover:underline">Volver al libro</a>
         </div>
     </div>
+    @include('parts.footer')
 
 </body>
 </html>

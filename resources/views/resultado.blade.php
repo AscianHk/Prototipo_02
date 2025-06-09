@@ -1,81 +1,79 @@
-{{-- filepath: resources/views/resultado.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Resultado</title>
+    <title>Resultado de la búsqueda</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center justify-center">
+<body class="min-h-screen flex flex-col items-center py-16 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('fondo.jpg') }}');">
 
     @include('parts.navbar')    
 
-    <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-2xl">
-        <h1 class="text-2xl font-bold text-blue-900 mb-6 text-center">Resultado de la búsqueda</h1>
+    <div class="w-full max-w-7xl px-6 mt-12">
+        <h1 class="text-4xl font-bold text-white text-center mb-10">Resultados de la búsqueda</h1>
 
         {{-- Resultados de libros --}}
         @if(isset($libros) && $libros->count() > 0)
-            <div class="grid gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 @foreach($libros as $item)
                     @php
                         $info = $item['volumeInfo'];
                         $id_item = $item['id'] ?? '';
                     @endphp
-                    <div class="flex gap-4 bg-white rounded-lg shadow p-4">
-                        @if(isset($info['imageLinks']['thumbnail']))
-                            <a href="/libro/{{ $id_item }}">
-                                <img src="{{ $info['imageLinks']['thumbnail'] }}" alt="Portada" class="w-24 h-32 object-cover rounded">
-                            </a>
-                        @else
-                            <div class="w-24 h-32 bg-gray-200 flex items-center justify-center rounded text-gray-500">Sin imagen</div>
+                    <div class="bg-purple-500/40 backdrop-blur-md p-6 rounded-xl shadow-xl hover:scale-105 transition-transform">
+                        <a href="/libro/{{ $id_item }}" class="block text-center">
+                            @if(isset($info['imageLinks']['thumbnail']))
+                                <img src="{{ $info['imageLinks']['thumbnail'] }}" alt="Portada" class="w-40 h-56 object-cover rounded-lg mx-auto shadow-md">
+                            @else
+                                <div class="w-40 h-56 bg-gray-200 flex items-center justify-center rounded-lg text-gray-500 mx-auto">Sin imagen</div>
+                            @endif
+                            <h2 class="text-xl font-semibold text-white mt-4 hover:underline">
+                                {{ $info['title'] ?? 'Sin título' }}
+                            </h2>
+                        </a>
+                        <p class="text-white mt-2">
+                            <span class="font-semibold">Autor(es):</span>
+                            {{ isset($info['authors']) ? implode(', ', $info['authors']) : 'Desconocido' }}
+                        </p>
+                        @if(isset($info['publishedDate']))
+                            <p class="text-white"><span class="font-semibold">Año:</span> {{ $info['publishedDate'] }}</p>
                         @endif
-                        <div>
-                            <a href="/libro/{{ $id_item }}">
-                                <h2 class="text-xl font-semibold text-blue-800 hover:underline">
-                                    {{ $info['title'] ?? 'Sin título' }}
-                                </h2>
-                            </a>
-                            <p class="text-gray-700">
-                                <span class="font-semibold">Autor(es):</span>
-                                {{ isset($info['authors']) ? implode(', ', $info['authors']) : 'Desconocido' }}
-                            </p>
-                            @if(isset($info['publishedDate']))
-                                <p class="text-gray-600"><span class="font-semibold">Año:</span> {{ $info['publishedDate'] }}</p>
-                            @endif
-                            @if(isset($info['description']))
-                                <p class="mt-2 text-gray-800 text-sm">{{ \Illuminate\Support\Str::limit($info['description'], 200) }}</p>
-                            @endif
-                        </div>
+                        @if(isset($info['description']))
+                            <p class="mt-2 text-white text-sm">{{ \Illuminate\Support\Str::limit($info['description'], 150) }}</p>
+                        @endif
                     </div>
                 @endforeach
             </div>
-            <div class="mt-6">
+            <div class="mt-12 flex justify-center">
                 {{ $libros->links() }}
             </div>
         @else
-            <div class="text-center text-red-700 font-semibold">No se encontraron resultados.</div>
+            <div class="text-center text-red-300 font-semibold text-xl">No se encontraron resultados.</div>
         @endif
 
         {{-- Resultados de usuarios --}}
         @if(isset($usuarios) && count($usuarios) > 0)
-            <div class="mb-8 mt-8">
-                <h2 class="text-xl font-bold text-blue-800 mb-4">Usuarios encontrados</h2>
-                <ul>
+            <div class="mt-16">
+                <h2 class="text-3xl font-bold text-white text-center mb-6">Usuarios encontrados</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                     @foreach($usuarios as $usuario)
-                        <li class="mb-2 flex items-center gap-3">
-                            <img src="{{ $usuario->foto_perfil ?? 'https://ui-avatars.com/api/?name='.urlencode($usuario->nombre_usuario) }}" alt="Foto" class="w-10 h-10 rounded-full object-cover">
-                            <a href="{{ route('perfil.usuario', $usuario->id) }}" class="text-blue-700 hover:underline font-semibold">
+                        <div class="bg-purple-500/40 backdrop-blur-md p-6 rounded-xl shadow-xl hover:scale-105 transition-transform flex items-center gap-4">
+                            <img src="{{ $usuario->foto_perfil ? asset($usuario->foto_perfil) : 'https://ui-avatars.com/api/?name='.urlencode($usuario->nombre_usuario) }}" 
+                                 alt="Foto" class="w-12 h-12 rounded-full object-cover shadow-md">
+                            <a href="{{ route('perfil.usuario', $usuario->id) }}" class="text-white hover:underline font-semibold text-lg">
                                 {{ $usuario->nombre_usuario }}
                             </a>
-                        </li>
+                        </div>
                     @endforeach
-                </ul>
+                </div>
             </div>
         @endif
 
-        <div class="mt-8 text-center">
-            <a href="/" class="text-blue-700 hover:underline">Volver a buscar</a>
+        <div class="mt-16 text-center">
+            <a href="/" class="text-white hover:underline text-lg font-semibold">Volver a buscar</a>
         </div>
     </div>
+
+    @include('parts.footer')
 </body>
 </html>
