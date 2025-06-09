@@ -33,7 +33,7 @@
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-2xl">
         <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
             <div>
-               <img src="{{ Auth::user()->foto_perfil ? asset(Auth::user()->foto_perfil) : asset('no_perfil.png') }}" 
+                    <img src="{{ Auth::user()->foto_perfil ? asset(Auth::user()->foto_perfil) : asset('no_perfil.png') }}" 
                     alt="Foto de perfil" class="w-32 h-32 rounded-full object-cover shadow">
 
                 <form action="{{ route('usuario.foto') }}" method="POST" enctype="multipart/form-data" class="mt-2">
