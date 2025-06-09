@@ -40,7 +40,7 @@
                                 const title = book.volumeInfo.title || "Título desconocido";
                                 const thumbnail = book.volumeInfo.imageLinks?.thumbnail 
                                     ? book.volumeInfo.imageLinks.thumbnail 
-                                    : "/errorsito.jpg"; // Usa la imagen local si no hay imagen
+                                    : "/Waldo.png"; // Usa la imagen local si no hay imagen
 
                                 return `
                                     <div class="flex-shrink-0 w-40 p-2 transform hover:scale-105 transition-transform">
