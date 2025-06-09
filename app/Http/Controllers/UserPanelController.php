@@ -104,6 +104,7 @@ class UserPanelController extends Controller
             ->get();
 
         return view('UserPanel.Diario', [
+            'capitulo' => $capitulo,
             'entradas' => $entradas,
             'usuario_id' => $usuario_id,
             'libro_id' => $libro_id,
@@ -119,6 +120,7 @@ class UserPanelController extends Controller
             'usuario_id' => $usuario_id,
             'libro_id' => $libro_id,
             'texto' => $request->texto,
+            'capitulo' => $request->capitulo,
         ]);
 
         return redirect()->route('usuario.diario', [
