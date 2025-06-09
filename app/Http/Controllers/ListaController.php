@@ -64,50 +64,8 @@ class ListaController extends Controller
         return back()->with('success', 'Libro añadido a la lista correctamente.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreListaRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Lista $lista)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Lista $lista)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateListaRequest $request, Lista $lista)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function eliminar($id)
+    
+        public function eliminar($id)
     {
         $item = \App\Models\Lista::findOrFail($id);
         if ($item->user_id === auth()->id()) {

@@ -6,6 +6,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center justify-center">
+
+    @include('parts.navbar')
+
+
+
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-xl">
         <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">{{ $libro->title ?? 'Sin título' }}</h1>
         <div class="flex flex-col md:flex-row gap-6 items-center">

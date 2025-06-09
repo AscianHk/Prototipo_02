@@ -1,57 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Inicio | Crítico de Bolsillo</title>
-    {{-- @vite('resources/css/app.css') --}}
-   <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center justify-center">
-    <div class="absolute top-6 right-8 flex gap-4">
-        @auth
-            <a href="{{ route('usuario.panel') }}" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition">Mi perfil</a>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cerrar sesión</button>
-            </form>
-        @else
-            <a href="{{ route('login') }}" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition">Iniciar sesión</a>
-            <a href="{{ route('register') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Registrarse</a>
-        @endauth
+<body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center">
+
+    <!-- Barra de navegación -->
+    @include('parts.navbar')
+
+    <!-- Espaciado para evitar que el contenido quede oculto detrás de la barra -->
+    <div class="mt-24 w-full max-w-6xl">
+        <h2 class="text-3xl font-bold text-white text-center mb-6">Explora por Género</h2>
+        <div id="carousels-container" class="space-y-8">
+            <!-- Aquí se insertarán los carruseles dinámicamente -->
+        </div>
     </div>
-    <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-md">
-        <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Crítico de Bolsillo</h1>
-        <form 
-            class="flex gap-2"
-            action="/buscar-libro"
-            method="GET"
-        >
-            <input 
-                type="text" 
-                name="q" 
-                placeholder="Buscar libro..." 
-                required
-                class="flex-1 px-4 py-2 rounded-l-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-            <button 
-                type="submit"
-                class="bg-blue-700 text-white px-6 py-2 font-semibold hover:bg-blue-800 transition rounded-none rounded-r-lg"
-            >
-                Buscar
-            </button>
-            <select 
-                name="tipo" 
-                class="px-4 py-2 rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 h-full"
-            >
-                <option value="titulo">Título</option>
-                <option value="autor">Autor</option>
-                <option value="genero">Género</option>
-                <option value="usuario">Usuario</option>
-            </select>
-        </form>
-        <p class="mt-8 text-center text-blue-800/80">¡Encuentra tu próximo libro favorito!</p>
-    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const genres = ["Horror", "Drama", "Science Fiction", "Fantasy", "Romance"];
+            const carouselsContainer = document.getElementById("carousels-container");
+
+            genres.forEach(genre => {
+                fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&maxResults=10`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.items) {
+                            const books = data.items.map(book => {
+                                const bookId = book.id;
+                                const title = book.volumeInfo.title || "Título desconocido";
+                                const thumbnail = book.volumeInfo.imageLinks?.thumbnail || "https://via.placeholder.com/128x192";
+
+                                return `
+                                    <div class="flex-shrink-0 w-40 p-2">
+                                        <a href="/libro/${bookId}">
+                                            <img src="${thumbnail}" alt="${title}" class="w-full h-56 object-cover rounded-lg shadow-md">
+                                            <p class="text-sm text-white mt-2 text-center">${title}</p>
+                                        </a>
+                                    </div>
+                                `;
+                            }).join("");
+
+                            const carousel = `
+                                <div class="bg-white/10 p-4 rounded-lg shadow-lg">
+                                    <h3 class="text-xl font-semibold text-white mb-4">${genre}</h3>
+                                    <div class="overflow-x-auto flex gap-4 scrollbar-hide">
+                                        ${books}
+                                    </div>
+                                </div>
+                            `;
+
+                            carouselsContainer.innerHTML += carousel;
+                        }
+                    })
+                    .catch(error => console.error("Error al obtener libros:", error));
+            });
+        });
+    </script>
+
+    <style>
+        /* Ocultar scrollbar en los carruseles */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+
 </body>
 </html>

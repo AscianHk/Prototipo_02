@@ -6,7 +6,52 @@
     <title>Mis Listas</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteButtons = document.querySelectorAll(".delete-btn");
+
+        deleteButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const form = this.closest(".delete-form");
+
+                Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "El libro será eliminado de la lista.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Sí, eliminar",
+                    cancelButtonText: "Cancelar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit(); // Envía el formulario si el usuario confirma
+                    }
+                });
+            });
+        });
+
+        // Mostrar alerta después de eliminar el libro
+        @if(session('success'))
+            Swal.fire({
+                title: "Libro eliminado",
+                text: "Has eliminado el libro de la lista.",
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+    });
+</script>
+
+
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center py-10">
+
+    @include('parts.navbar')
+
+
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-2xl">
         <h1 class="text-2xl font-bold text-blue-900 mb-8 text-center">Mis Listas</h1>
                 
@@ -26,16 +71,19 @@
                                         class="w-10 h-14 object-cover rounded shadow group-hover:scale-105 transition" />
                                     <span class="text-blue-900 group-hover:underline">{{ $item->libro->title ?? 'Sin título' }}</span>
                                 </a>
-                                <form action="{{ route('listas.eliminar', $item->id) }}" method="POST" class="ml-2">
+
+                                <!-- Formulario de eliminación con SweetAlert -->
+                                <form class="delete-form" action="{{ route('listas.eliminar', $item->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800 font-bold" title="Eliminar">
+                                    <button type="button" class="text-red-600 hover:text-red-800 font-bold delete-btn" title="Eliminar">
                                         ✕
                                     </button>
                                 </form>
+
                                 <a href="{{ route('usuario.diario', ['usuario_id' => Auth::id(), 'libro_id' => $item->libro->id]) }}"
-                                   class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition ml-2"
-                                   title="Diario de aventuras">
+                                class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition ml-2"
+                                title="Diario de aventuras">
                                     Diario de aventuras
                                 </a>
                             </li>
@@ -201,3 +249,5 @@
     </div>
 </body>
 </html>
+
+
