@@ -4,7 +4,35 @@
     <meta charset="UTF-8">
     <title>{{ $libro->title ?? 'Libro' }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('success'))
+            Swal.fire({
+                title: "¡Libro añadido!",
+                text: "{{ session('success') }}",
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+
+        @if(session('info'))
+            Swal.fire({
+                title: "Información",
+                text: "{{ session('info') }}",
+                icon: "info",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+    });
+</script>
+
+
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center justify-center">
 
     @include('parts.navbar')
@@ -16,8 +44,11 @@
         <div class="flex flex-col md:flex-row gap-6 items-center">
             @if($libro->imagen_url)
                 <div class="flex flex-col items-center">
-                    <img src="{{ $libro->imagen_url }}" alt="Portada" class="w-40 h-56 object-cover rounded shadow">
-                    {{-- Estrellas de puntuación --}}
+                    @if($libro->imagen_url)
+                        <img src="{{ $libro->imagen_url }}" alt="Portada" class="w-40 h-56 object-cover rounded shadow">
+                    @else
+                        <img src="{{ asset('errorsito.jpg') }}" alt="Imagen no disponible" class="w-40 h-56 object-cover rounded shadow">
+                    @endif
                     <div class="mt-2 flex justify-center">
                         @php
                             $rating = $libro->average_rating ?? 0;
@@ -76,11 +107,19 @@
                 Volver a resultados
             </a>
             @auth
+            
                 <form action="{{ url('/libro/' . $libro->id . '/resenas') }}" method="GET" class="mt-4">
                     <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition">
                         Ver reseñas
                     </button>
                 </form>
+
+                @if(Auth::check() && Auth::user()->rol === 'admin')
+                    <a href="{{ url('/libro/'.$libro->id.'/editar') }}" class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800 transition mt-4 inline-block">
+                        Editar libro
+                    </a>
+                @endif
+
                 {{-- Barra selectora para añadir a lista --}}
                 <form action="{{ route('listas.agregar') }}" method="POST" class="mt-4 flex flex-col items-center gap-2">
                     @csrf

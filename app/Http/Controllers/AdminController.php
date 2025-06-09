@@ -42,7 +42,7 @@ class AdminController extends Controller
     }
 
     // Actualiza los datos del usuario editado
-    public function actualizarUsuario(Request $request, $id)
+        public function actualizarUsuario(Request $request, $id)
     {
         $usuario = User::findOrFail($id);
 

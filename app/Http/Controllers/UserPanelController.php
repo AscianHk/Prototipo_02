@@ -17,19 +17,27 @@ class UserPanelController extends Controller
         return view('UserPanel.User_Page', compact('usuario', 'resenas'));
     }
 
-    public function actualizarFoto(Request $request)
+   public function actualizarFoto(Request $request)
     {
         $request->validate([
-            'foto_perfil' => 'required|image|max:2048',
+            'foto_perfil' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $user = auth()->user();
-        $path = $request->file('foto_perfil')->store('fotos_perfil', 'public');
-        $user->foto_perfil = $path;
+
+        // Obtener el archivo y definir la ruta en public/
+        $file = $request->file('foto_perfil');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('fotos_perfil'), $filename);
+
+        // Guardar la ruta en la base de datos
+        $user->foto_perfil = 'fotos_perfil/' . $filename;
         $user->save();
 
-        return redirect()->back()->with('success', 'Foto de perfil actualizada.');
+        return redirect()->back()->with('success', 'Foto de perfil actualizada correctamente.');
     }
+
+
 
     public function actualizarBiografia(Request $request)
     {
@@ -41,7 +49,7 @@ class UserPanelController extends Controller
         $user->biografia = $request->biografia;
         $user->save();
 
-        return redirect()->back()->with('success', 'Biografía actualizada.');
+        return redirect()->back()->with('success', 'Biografía actualizada correctamente.');
     }
 
     public function listas()

@@ -7,6 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center justify-center">
+
+    @include('parts.navbar')    
+
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-2xl">
         <h1 class="text-2xl font-bold text-blue-900 mb-6 text-center">Resultado de la búsqueda</h1>
 

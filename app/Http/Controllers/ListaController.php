@@ -59,9 +59,10 @@ class ListaController extends Controller
 
         if (!$existe) {
             \App\Models\Lista::create($data);
+            return back()->with('success', 'Libro añadido a la lista correctamente.');
         }
 
-        return back()->with('success', 'Libro añadido a la lista correctamente.');
+        return back()->with('info', 'Este libro ya está en tu lista.');
     }
 
     

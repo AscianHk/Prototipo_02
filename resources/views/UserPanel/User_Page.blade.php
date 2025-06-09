@@ -5,7 +5,26 @@
     <meta charset="UTF-8">
     <title>Panel de Usuario</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('success'))
+            Swal.fire({
+                title: "¡Éxito!",
+                text: "{{ session('success') }}",
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+    });
+</script>
+
+
+
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center py-10">   
 
     @include('parts.navbar')
@@ -14,7 +33,9 @@
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-2xl">
         <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
             <div>
-                <img src="{{ Auth::user()->foto_perfil ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->nombre_usuario) }}" alt="Foto de perfil" class="w-32 h-32 rounded-full object-cover shadow">
+               <img src="{{ Auth::user()->foto_perfil ? asset(Auth::user()->foto_perfil) : asset('no_perfil.png') }}" 
+                    alt="Foto de perfil" class="w-32 h-32 rounded-full object-cover shadow">
+
                 <form action="{{ route('usuario.foto') }}" method="POST" enctype="multipart/form-data" class="mt-2">
                     @csrf
                     <input type="file" name="foto_perfil" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>

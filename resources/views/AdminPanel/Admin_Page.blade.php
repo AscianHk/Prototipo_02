@@ -4,8 +4,28 @@
     <meta charset="UTF-8">
     <title>Panel de Administración</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('success'))
+            Swal.fire({
+                title: "¡Usuario creado!",
+                text: "{{ session('success') }}",
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+    });
+</script>
+
+
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center py-10">
+
+    @include('parts.navbar')
+
     <div class="bg-white/90 rounded-xl shadow-lg p-8 w-full max-w-3xl">
         <h1 class="text-3xl font-bold text-blue-900 mb-8 text-center">Panel de Administración</h1>
 

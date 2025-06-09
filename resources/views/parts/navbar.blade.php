@@ -1,11 +1,13 @@
-<nav class="fixed top-0 left-0 w-full bg-blue-800/90 backdrop-blur-md shadow-lg py-4 px-6 flex items-center justify-between md:flex-col md:gap-4">
+<nav class="sticky top-0 left-0 w-full bg-blue-800/80 backdrop-blur-md shadow-lg py-4 px-8 flex items-center justify-between md:flex-col md:gap-4 z-50">
     <!-- Contenedor de navegación -->
     <div class="flex items-center justify-between w-full max-w-7xl mx-auto">
         
         <!-- Botones de navegación a la izquierda -->
         <div class="flex gap-6">
-            <a href="/" class="text-white hover:bg-blue-700 px-4 py-2 rounded transition">Inicio</a>
-            
+            <a href="/">
+                <img src="{{ asset('icono_CDB.png') }}" alt="Crítico de Bolsillo" class="w-10 h-10 object-contain">
+            </a>
+            <a href="/" class="text-white font-semibold hover:bg-blue-700 px-4 py-2 rounded transition">Inicio</a>
         </div>
 
         <!-- Barra de búsqueda centrada -->
@@ -28,16 +30,19 @@
         </div>
 
         <!-- Botones de autenticación a la derecha -->
-        <div class="flex gap-4">
+        <div class="flex items-center gap-4">
+            @if(Auth::check() && Auth::user()->rol === 'admin')
+                <a href="{{ route('admin.index') }}" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-800 transition font-semibold">Panel de administración</a>
+            @endif
             @auth
-                <a href="{{ route('usuario.panel') }}" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Mi perfil</a>
+                <a href="{{ route('usuario.panel') }}" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 transition font-semibold">Mi perfil</a>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500 transition">Cerrar sesión</button>
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500 transition font-semibold">Cerrar sesión</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Iniciar sesión</a>
-                <a href="{{ route('register') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500 transition">Registrarse</a>
+                <a href="{{ route('login') }}" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 transition font-semibold">Iniciar sesión</a>
+                <a href="{{ route('register') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500 transition font-semibold">Registrarse</a>
             @endauth
         </div>
     </div>

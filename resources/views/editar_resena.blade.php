@@ -6,8 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Editar reseña</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body class="bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 min-h-screen flex flex-col items-center justify-center">
+
+
+
     @include('parts.navbar')
     <div class="bg-white/80 rounded-xl shadow-lg p-8 w-full max-w-xl mx-auto mt-10">
         <h1 class="text-2xl font-bold text-blue-900 mb-6 text-center">Editar reseña de "{{ $libro->title }}"</h1>

@@ -25,3 +25,4 @@ class Resena extends Model
         return $this->belongsTo(Libro::class);
     }
 }
+ 

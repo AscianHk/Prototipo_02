@@ -23,7 +23,12 @@ use App\Models\User;
         return view('resultado');
     })->name('resultado');
 
-    Route::get('/libro/{id}', [CacheoApiController::class, 'mostrarLibro']);
+    Route::get('/libro/{id}', [CacheoApiController::class, 'mostrarLibro'])->name('libro.mostrar');
+
+
+//=========================================================================
+//                                Reseñas de Libros
+//=========================================================================
 
 
     Route::get('/libro/{id}/resenas', [LibroController::class, 'mostrarResenas'])->middleware(AuthControl::class);
@@ -32,10 +37,25 @@ use App\Models\User;
     Route::post('/libro/{id}/resenas/editar/{resenaId}', [LibroController::class, 'actualizarResena'])->middleware(AuthControl::class);
     Route::get('/libro/{id}/resenas/borrar/{resenaId}', [LibroController::class, 'borrarResena'])->middleware(AuthControl::class);
 
+//=========================================================================
+//                                Edicion De Libros
+//=========================================================================
+
+    Route::get('/libro/{id}/editar', [LibroController::class, 'editarLibro'])
+        ->middleware(AuthControl::class)
+        ->name('libro.editar');
+    Route::put('/libro/{id}/actualizar', [LibroController::class, 'actualizarLibro'])
+        ->middleware(AuthControl::class)
+        ->name('libro.actualizar');
 
 
+//=========================================================================
+//=========================================================================
 
 
+//=========================================================================
+//                                Usuarios
+//=========================================================================
     
     Route::get('/perfil/{id}', [UserPanelController::class, 'verPerfil'])
         ->middleware('auth')

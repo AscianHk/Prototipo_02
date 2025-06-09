@@ -45,7 +45,9 @@
                             const books = data.items.map(book => {
                                 const bookId = book.id;
                                 const title = book.volumeInfo.title || "Título desconocido";
-                                const thumbnail = book.volumeInfo.imageLinks?.thumbnail || "https://via.placeholder.com/128x192";
+                                const thumbnail = book.volumeInfo.imageLinks?.thumbnail 
+                                    ? book.volumeInfo.imageLinks.thumbnail 
+                                    : "/errorsito.jpg"; // Usa la imagen local si no hay imagen
 
                                 return `
                                     <div class="flex-shrink-0 w-40 p-2 transform hover:scale-105 transition-transform">
@@ -72,6 +74,7 @@
                     .catch(error => console.error("Error al obtener libros:", error));
             });
         });
+
     </script>
 
     <style>
