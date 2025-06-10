@@ -12,6 +12,19 @@
     <!-- Barra de navegación -->
     @include('parts.navbar')
 
+    <!-- Presentación de la página -->
+    <div class="w-full max-w-4xl bg-white/20 backdrop-blur-md rounded-lg shadow-lg p-8 text-center mt-6 mb-10">
+        <h1 class="text-4xl font-bold text-white mb-4">Bienvenido a Crítico de Bolsillo</h1>
+        <p class="text-lg text-white font-semibold mb-6">
+            Explora una amplia colección de libros, descubre nuevas historias y comparte tus opiniones con la comunidad.
+            Encuentra libros por género, autor o título y crea tus propias listas personalizadas.
+        </p>
+        <button onclick="document.getElementById('carousels-container').scrollIntoView({ behavior: 'smooth' })"
+            class="bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 rounded-lg shadow-md transition font-semibold">
+            Descubrir libros
+        </button>
+    </div>
+
     <!-- Contenido principal -->
     <div class="w-full max-w-7xl px-6">
         <h2 class="text-4xl font-bold text-white text-center mb-10">Explora por Género</h2>

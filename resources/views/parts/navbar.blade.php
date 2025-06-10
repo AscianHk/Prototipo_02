@@ -42,13 +42,20 @@
                 </button>
 
                 <!-- Selector mejorado -->
-                <select name="tipo"
-                    class="appearance-none bg-blue-700 text-white font-semibold rounded-lg px-4 py-2 shadow-md hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="titulo">Título</option>
-                    <option value="autor">Autor</option>
-                    <option value="genero">Género</option>
-                    <option value="usuario">Usuario</option>
-                </select>
+                <div class="relative w-full sm:w-auto">
+                    <select name="tipo"
+                        class="appearance-none bg-purple-600 text-white font-semibold rounded-lg px-4 py-2 shadow-md hover:bg-purple-500 transition focus:outline-none focus:ring-2 focus:ring-purple-400 pl-10 w-full sm:w-auto">
+                        <option value="titulo">Título</option>
+                        <option value="autor">Autor</option>
+                        <option value="genero">Género</option>
+                        <option value="usuario">Usuario</option>
+                    </select>
+                    <div class="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 5a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-.293.707L11 12.414V15a1 1 0 01-.293.707l-2 2A1 1 0 017 17v-4.586l-4.707-4.707A1 1 0 013 7V5z"/>
+                        </svg>
+                    </div>
+                </div>
             </form>
 
             <!-- Botones de autenticación -->
@@ -93,13 +100,20 @@
             </button>
 
             <!-- Selector mejorado -->
-            <select name="tipo"
-                class="appearance-none bg-blue-700 text-white font-semibold rounded-lg px-4 py-2 shadow-md hover:bg-purple-600 transition focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="titulo">Título</option>
-                <option value="autor">Autor</option>
-                <option value="genero">Género</option>
-                <option value="usuario">Usuario</option>
-            </select>
+            <div class="relative w-full sm:w-auto">
+                <select name="tipo"
+                    class="appearance-none bg-purple-600 text-white font-semibold rounded-lg px-4 py-2 shadow-md hover:bg-purple-500 transition focus:outline-none focus:ring-2 focus:ring-purple-400 pl-10 w-full sm:w-auto">
+                    <option value="titulo">Título</option>
+                    <option value="autor">Autor</option>
+                    <option value="genero">Género</option>
+                    <option value="usuario">Usuario</option>
+                </select>
+                <div class="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 5a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-.293.707L11 12.414V15a1 1 0 01-.293.707l-2 2A1 1 0 017 17v-4.586l-4.707-4.707A1 1 0 013 7V5z"/>
+                    </svg>
+                </div>
+            </div>
         </form>
 
         <!-- Botones de autenticación -->
