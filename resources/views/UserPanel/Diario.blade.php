@@ -42,7 +42,7 @@
                         class="w-24 border border-white/50 rounded p-2 bg-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                 </div>
                 <textarea name="texto" rows="6" 
-                    class="w-full border border-white/50 rounded p-3 bg-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4" 
+                    class="w-full border border-white/50 rounded p-3 bg-white/40 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4" 
                     placeholder="Escribe aquí tu entrada del diario..." required>{{ old('texto') }}</textarea>
                 <button type="submit" 
                     class="w-full bg-blue-700 text-white py-2 rounded-lg hover:bg-blue-800 hover:scale-105 transition focus:ring-2 focus:ring-blue-400">

@@ -106,34 +106,45 @@
             <a href="{{ route('resultado') }}" class="text-blue-700 hover:underline">
                 Volver a resultados
             </a>
-            @auth
-            
+            @auth   
+                <!-- Botón "Ver reseñas" -->
                 <form action="{{ url('/libro/' . $libro->id . '/resenas') }}" method="GET" class="mt-4">
-                    <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg flex items-center gap-2 shadow-md transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 5a1 1 0 011-1h14a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V5zm2 2v8h12V7H4zm2 2h8v2H6V9z"/>
+                        </svg>
                         Ver reseñas
                     </button>
                 </form>
 
                 @if(Auth::check() && Auth::user()->rol === 'admin')
-                    <a href="{{ url('/libro/'.$libro->id.'/editar') }}" class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800 transition mt-4 inline-block">
+                    <!-- Botón "Editar libro" -->
+                    <a href="{{ url('/libro/'.$libro->id.'/editar') }}" class="bg-purple-700 hover:bg-purple-600 text-white px-5 py-2 rounded-lg font-bold shadow-md transition flex items-center gap-2 mt-4 inline-block">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5 13l4 4 6-6V7l-6 6-4-4v4z"/>
+                        </svg>
                         Editar libro
                     </a>
                 @endif
-
-                {{-- Barra selectora para añadir a lista --}}
                 <form action="{{ route('listas.agregar') }}" method="POST" class="mt-4 flex flex-col items-center gap-2">
                     @csrf
                     <input type="hidden" name="libro_id" value="{{ $libro->id }}">
                     <label for="tipo_lista" class="font-semibold text-blue-800">Añadir a:</label>
-                    <div class="flex gap-2">
-                        <select name="tipo_lista" id="tipo_lista" class="border border-blue-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <div class="relative w-full sm:w-auto flex gap-2">
+                        <select name="tipo_lista" id="tipo_lista"
+                            class="appearance-none bg-blue-700 text-white font-semibold rounded-lg px-4 py-2 shadow-md hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-500 pl-10 w-full sm:w-auto">
                             <option value="favorito">Favoritos</option>
                             <option value="pendiente">Pendiente</option>
                             <option value="leyendo">Leyendo</option>
                             <option value="terminado">Terminado</option>
                             <option value="me_gusta">Me gusta</option>
                         </select>
-                        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+                        <div class="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 5a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-.293.707L11 12.414V15a1 1 0 01-.293.707l-2 2A1 1 0 017 17v-4.586l-4.707-4.707A1 1 0 013 7V5z"/>
+                            </svg>
+                        </div>
+                        <button type="submit" class="bg-green-600 hover:bg-green-500 text-white px-5 py-2 rounded-lg shadow-md transition">
                             Añadir
                         </button>
                     </div>
