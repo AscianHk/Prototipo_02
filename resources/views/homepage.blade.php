@@ -27,7 +27,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const genres = ["Horror", "Drama", "Ciencia Ficción", "Fantasia", "Romance"];
+            const genres = ["Horror", "Drama", "Science Fiction", "Fantasy", "Romance"];
             const carouselsContainer = document.getElementById("carousels-container");
 
             genres.forEach(genre => {
