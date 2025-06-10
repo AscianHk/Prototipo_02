@@ -111,8 +111,8 @@ use App\Models\User;
     // Crear el usuario
     User::factory()->create([
         'nombre_usuario' => 'Admin',
-        'email' => 'p@p.com',
-        'password' => bcrypt('p'),
+        'email' => 'jesuscereceda7@gmail.com',
+        'password' => bcrypt('maiden05062003'),
         'rol' => 'admin',
         ]);
 
