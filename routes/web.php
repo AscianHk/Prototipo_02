@@ -102,6 +102,22 @@ use App\Models\User;
     Route::post('/admin/actualizar-usuario/{id}', [AdminController::class, 'actualizarUsuario'])->name('admin.actualizarUsuario');
     Route::post('/admin/crear-usuario', [AdminController::class, 'crearUsuario'])->name('admin.crearUsuario');
     Route::get('/admin/editar-usuario/{id}', [AdminController::class, 'editarUsuario'])->name('admin.editarUsuario');
+    Route::get('/seed', function () {
+  
+    if (User::where('email', 'p@p.com')->exists()) {
+        return response()->json(['message' => 'El usuario ya existe'], 409);
+    }
+
+    // Crear el usuario
+    User::factory()->create([
+        'nombre_usuario' => 'Admin',
+        'email' => 'p@p.com',
+        'password' => bcrypt('p'),
+        'rol' => 'admin',
+        ]);
+
+    return response()->json(['message' => 'Usuario creado correctamente'], 201);
+});
 
 
 
