@@ -68,5 +68,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Enlaces
 Presentacion: https://www.canva.com/design/DAGp80flPbI/UxftRuVOEr6cu8tx6oeaPQ/edit?utm_content=DAGp80flPbI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 Pagina web: https://critico-de-bolsillo-main-qqzlgl.laravel.cloud/
 
